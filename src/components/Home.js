@@ -7,12 +7,12 @@ function Home() {
   <div className="main_content">
   <div className="men_text">
     <h1>
-      Japanese Food<br />
-      With A<span className="highlighted">Twist</span>
+      Western Food<br />
+      With Japan<span className="highlighted">Twist</span>
     </h1>
   </div>
   <div className="main_btn">
-    <a href="#order">Book A Table</a>
+    <a href="#Order">Book A Table</a>
     <i className="fa-solid fa-angle-right"></i>
   </div>
 </div>

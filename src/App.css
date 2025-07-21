@@ -5,6 +5,21 @@
   font-family: sans-serif;
 }
 
+/* Make sure the page takes full height */
+/* Ensure the root takes full height */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Content area grows to fill available space */
+.main-content {
+  flex: 1;
+}
+
 html{
   scroll-behavior: smooth;
 }
@@ -467,7 +482,6 @@ section .main_btn:hover i {
 
 .review{
   width: 100%;
-  height: 100vh;
   padding: 70px 0;
 }
 
@@ -502,7 +516,7 @@ section .main_btn:hover i {
 
 .review .review_box .review_card{
   width: 350px;
-  height: 535px;
+  height: 540px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.5);
   border-radius: 8px;
   padding: 8px 20px;
@@ -581,7 +595,6 @@ section .main_btn:hover i {
 
 .order{
   width: 100%;
-  height: 100vh;
   padding: 70px 0;
   background-image: url(image/bg2.jpg);
   background-size: cover;
@@ -660,6 +673,20 @@ section .main_btn:hover i {
   text-decoration: none;
 }
 
+.order .order_main form .input select {
+  width: 300px;
+  height: 35px;
+  padding: 0 10px;
+  border: 2px solid #cccccc;
+  background: #eeeeee;
+  outline: none;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.order .order_main form .input select:focus {
+  border: 2px solid #fac031;
+}
 
 
 
@@ -780,6 +807,7 @@ section .main_btn:hover i {
 
 footer {
   width: 100%;
+  
   padding: 20px 20px;
   background-color: #fac031;
   /* optionally, change text color for contrast */
