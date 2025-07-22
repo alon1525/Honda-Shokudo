@@ -5,7 +5,7 @@ import chef2 from '../image/chef2.png';
 
 function Team() {
   const teamMembers = [
-    { id: 1, name: 'Chef', image: chef1 },
+    { id: 1, name: 'Honda', image: chef1 },
     { id: 2, name: 'Chef', image: chef2 },
   ];
 

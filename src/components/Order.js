@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import image from "../image/order_image.png";
 import { db } from "../firebase";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import {
   collection,
   addDoc,
@@ -24,18 +25,18 @@ function Order() {
     const meal = e.target.value;
     setSelectedMeal(meal);
     setSelectedPeople(""); // Reset selected people
-    setPeopleOptions([]);  // Reset people options temporarily
-  
+    setPeopleOptions([]); // Reset people options temporarily
+
     const [mealType, date] = meal.split(" ");
     const datetimeSlot = `${date}_${mealType.toLowerCase()}`;
     const reservationRef = collection(db, "reservations");
     const q = query(reservationRef, where("datetimeSlot", "==", datetimeSlot));
     const querySnapshot = await getDocs(q);
-  
+
     let counterSeatsUsed = 0;
     let table1Used = false;
     let table2Used = false;
-  
+
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       if (data.table === "counter") {
@@ -46,22 +47,22 @@ function Order() {
         table2Used = true;
       }
     });
-  
+
     const options = new Set();
-  
+
     // Counter: max 5 seats
     const counterSeatsLeft = 5 - counterSeatsUsed;
     for (let i = 1; i <= Math.min(3, counterSeatsLeft); i++) {
       options.add(i);
     }
-  
+
     // Tables: if available, allow 2–6 people
     if (!table1Used || !table2Used) {
       for (let i = 2; i <= 6; i++) {
         options.add(i);
       }
     }
-  
+
     // Sort and set options
     const sortedOptions = Array.from(options).sort((a, b) => a - b);
     setPeopleOptions(sortedOptions);
@@ -149,7 +150,7 @@ function Order() {
       setMessage(`Reserved successfully at ${tableName}.`);
       setTimeout(() => {
         window.location.reload();
-      }, 4000); // waits 4 seconds before refreshing
+      }, 3000); // waits 3 seconds before refreshing
     } catch (err) {
       setMessage("Failed to reserve. Try again.");
     }
@@ -160,6 +161,13 @@ function Order() {
     if (!name || !phone || !selectedMeal || !selectedPeople) {
       return setMessage("Please fill in all fields.");
     }
+
+    // Assume Japan if no + is entered
+    const phoneNumber = parsePhoneNumberFromString(phone, "JP");
+    if (!phoneNumber || !phoneNumber.isValid()) {
+      return setMessage("Please enter a valid phone number.");
+    }
+
     setMessage("Checking availability...");
     await checkAvailabilityAndBook();
   };
@@ -174,7 +182,10 @@ function Order() {
     const checkSlot = async (dateStr, meal) => {
       const datetimeSlot = `${dateStr}_${meal}`;
       const snapshot = await getDocs(
-        query(collection(db, "reservations"), where("datetimeSlot", "==", datetimeSlot))
+        query(
+          collection(db, "reservations"),
+          where("datetimeSlot", "==", datetimeSlot)
+        )
       );
 
       let tables = 0;
@@ -187,12 +198,14 @@ function Order() {
       });
 
       if (!(tables >= 2 && counter >= 5)) {
-        const label = `${meal.charAt(0).toUpperCase() + meal.slice(1)} ${dateStr}`;
+        const label = `${
+          meal.charAt(0).toUpperCase() + meal.slice(1)
+        } ${dateStr}`;
         setTimeOptions((prev) => [...prev, label]);
       }
     };
 
-    for (let i = 0; i < 14; i++) {
+    for (let i = 1; i < 15; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       const dateStr = date.toISOString().split("T")[0];
@@ -224,20 +237,26 @@ function Order() {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-
           <div className="input">
-            <p>Phone Number</p>
-            <input
-              type="tel"
-              placeholder="Your number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+          <p>Phone Number</p>
+          <input
+            type="tel"
+            inputMode="tel"
+            pattern="[0-9+]{7,15}"
+            placeholder="Your number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
           </div>
 
           <div className="input">
             <p>Date and Meal</p>
-            <select name="meal" value={selectedMeal} onChange={handleMealChange}>
+            <select
+              name="meal"
+              value={selectedMeal}
+              onChange={handleMealChange}
+            >
               <option value="" disabled>
                 Select time of order
               </option>

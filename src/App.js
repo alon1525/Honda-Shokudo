@@ -20,8 +20,8 @@ function App() {
           <Home />
         </section>
         <About />
-        <Menu />
         <Gallary />
+        <Menu />
         <Team />
         <Review />
         <Order />
