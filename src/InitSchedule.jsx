@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import image from "../image/order_image.png";
 import { db } from "../firebase";
 import {
@@ -12,93 +12,66 @@ import {
 
 function Order() {
   const [timeOptions, setTimeOptions] = useState([]);
-  const initialized = useRef(false);
   const [selectedMeal, setSelectedMeal] = useState("");
-  const [peopleOptions, setPeopleOptions] = useState([]);
+  const [peopleOptions, setPeopleOptions] = useState([1, 2, 3, 4, 5, 6]);
   const [selectedPeople, setSelectedPeople] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleMealChange = async (e) => {
-    const meal = e.target.value;
-    setSelectedMeal(meal);
-    setSelectedPeople(""); // Reset selected people
-    setPeopleOptions([]);  // Reset people options temporarily
-  
-    const [mealType, date] = meal.split(" ");
-    const datetimeSlot = `${date}_${mealType.toLowerCase()}`;
-    const reservationRef = collection(db, "reservations");
-    const q = query(reservationRef, where("datetimeSlot", "==", datetimeSlot));
-    const querySnapshot = await getDocs(q);
-  
-    let counterSeatsUsed = 0;
-    let table1Used = false;
-    let table2Used = false;
-  
-    querySnapshot.forEach((doc) => {
+  // Generate 14-day options
+  useEffect(() => {
+    const generateDates = async () => {
+      const options = [];
+      const today = new Date();
+
+      for (let i = 0; i < 14; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        const dateStr = date.toISOString().split("T")[0];
+
+        for (const meal of ["lunch", "dinner"]) {
+          const slot = `${dateStr}_${meal}`;
+          const isFull = await checkIfSlotIsFull(slot);
+          if (!isFull) {
+            options.push(`${meal.charAt(0).toUpperCase() + meal.slice(1)} ${dateStr}`);
+          }
+        }
+      }
+
+      setTimeOptions(options);
+    };
+
+    generateDates();
+  }, []);
+
+  const checkIfSlotIsFull = async (datetimeSlot) => {
+    const q = query(
+      collection(db, "reservations"),
+      where("datetimeSlot", "==", datetimeSlot)
+    );
+    const snapshot = await getDocs(q);
+
+    let tables = 0;
+    let counter = 0;
+
+    snapshot.forEach((doc) => {
       const data = doc.data();
-      if (data.table === "counter") {
-        counterSeatsUsed += data.people;
-      } else if (data.table === "table1") {
-        table1Used = true;
-      } else if (data.table === "table2") {
-        table2Used = true;
-      }
+      if (data.table === "table1" || data.table === "table2") tables++;
+      if (data.table === "counter") counter += data.people;
     });
-  
-    const options = new Set();
-  
-    // Counter: max 5 seats
-    const counterSeatsLeft = 5 - counterSeatsUsed;
-    for (let i = 1; i <= Math.min(3, counterSeatsLeft); i++) {
-      options.add(i);
-    }
-  
-    // Tables: if available, allow 2–6 people
-    if (!table1Used || !table2Used) {
-      for (let i = 2; i <= 6; i++) {
-        options.add(i);
-      }
-    }
-  
-    // Sort and set options
-    const sortedOptions = Array.from(options).sort((a, b) => a - b);
-    setPeopleOptions(sortedOptions);
+
+    return tables >= 2 && counter >= 5;
+  };
+
+  const handleMealChange = (e) => {
+    setSelectedMeal(e.target.value);
+    setSelectedPeople("");
   };
 
   const checkAvailabilityAndBook = async () => {
     const [mealType, date] = selectedMeal.split(" ");
     const datetimeSlot = `${date}_${mealType.toLowerCase()}`;
-
-    // Check for existing reservations by phone
-    const phoneCheckQuery = query(
-      collection(db, "reservations"),
-      where("phone", "==", phone)
-    );
-    const phoneCheckSnapshot = await getDocs(phoneCheckQuery);
-
-    let totalReservations = 0;
-    let sameDayReservation = false;
-
-    phoneCheckSnapshot.forEach((doc) => {
-      const data = doc.data();
-      totalReservations++;
-      const existingDate = data.datetimeSlot.split("_")[0];
-      if (existingDate === date) {
-        sameDayReservation = true;
-      }
-    });
-
-    if (sameDayReservation) {
-      return setMessage("You already have a reservation for this day.");
-    }
-
-    if (totalReservations >= 4) {
-      return setMessage("You have reached the maximum of 4 reservations.");
-    }
-
-    // Check availability for slot
     const reservationRef = collection(db, "reservations");
     const q = query(reservationRef, where("datetimeSlot", "==", datetimeSlot));
     const querySnapshot = await getDocs(q);
@@ -120,18 +93,20 @@ function Order() {
 
     const groupSize = parseInt(selectedPeople);
 
+    if (groupSize > 6 || groupSize < 1) {
+      return setMessage("Group must be between 1 and 6 people.");
+    }
+
     if (groupSize <= 3 && counterSeatsUsed + groupSize <= 5) {
       return await saveReservation("counter");
     }
 
-    if (!table1Used) {
-      return await saveReservation("table1");
-    }
-    if (!table2Used) {
-      return await saveReservation("table2");
+    if (groupSize >= 2 && groupSize <= 6) {
+      if (!table1Used) return await saveReservation("table1");
+      if (!table2Used) return await saveReservation("table2");
     }
 
-    return setMessage("No tables available for this slot.");
+    return setMessage("No space available for this group size at this time.");
   };
 
   const saveReservation = async (tableName) => {
@@ -147,9 +122,6 @@ function Order() {
         createdAt: Timestamp.now(),
       });
       setMessage(`Reserved successfully at ${tableName}.`);
-      setTimeout(() => {
-        window.location.reload();
-      }, 4000); // waits 4 seconds before refreshing
     } catch (err) {
       setMessage("Failed to reserve. Try again.");
     }
@@ -164,49 +136,10 @@ function Order() {
     await checkAvailabilityAndBook();
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    if (initialized.current) return;
-    initialized.current = true;
-
-    const today = new Date();
-
-    const checkSlot = async (dateStr, meal) => {
-      const datetimeSlot = `${dateStr}_${meal}`;
-      const snapshot = await getDocs(
-        query(collection(db, "reservations"), where("datetimeSlot", "==", datetimeSlot))
-      );
-
-      let tables = 0;
-      let counter = 0;
-
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        if (data.table === "counter") counter += data.people;
-        else if (data.table === "table1" || data.table === "table2") tables++;
-      });
-
-      if (!(tables >= 2 && counter >= 5)) {
-        const label = `${meal.charAt(0).toUpperCase() + meal.slice(1)} ${dateStr}`;
-        setTimeOptions((prev) => [...prev, label]);
-      }
-    };
-
-    for (let i = 0; i < 14; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      const dateStr = date.toISOString().split("T")[0];
-
-      for (const meal of ["lunch", "dinner"]) {
-        checkSlot(dateStr, meal);
-      }
-    }
-  }, []);
-
   return (
     <div className="order" id="Order">
       <h1>
-        <span>Order</span>Now
+        <span>Order</span> Now
       </h1>
 
       <div className="order_main">
@@ -237,7 +170,11 @@ function Order() {
 
           <div className="input">
             <p>Date and Meal</p>
-            <select name="meal" value={selectedMeal} onChange={handleMealChange}>
+            <select
+              name="meal"
+              value={selectedMeal}
+              onChange={handleMealChange}
+            >
               <option value="" disabled>
                 Select time of order
               </option>

@@ -481,7 +481,6 @@ section .main_btn:hover i {
 /*Review*/
 
 .review{
-  width: 100%;
   padding: 70px 0;
 }
 
@@ -512,6 +511,7 @@ section .main_btn:hover i {
   width: 95%;
   margin: 70px auto;
   display: flex;
+  justify-content: space-between; /* spreads items with space between */
 }
 
 .review .review_box .review_card{
