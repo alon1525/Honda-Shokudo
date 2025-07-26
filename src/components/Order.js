@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import image from "../image/order_image.png";
 import { db } from "../firebase";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
@@ -11,7 +11,61 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
+import { LanguageContext } from "../context/LanguageContext";
+
 function Order() {
+  const { language } = useContext(LanguageContext);
+
+  const texts = {
+    en: {
+      titleOrder: "Order",
+      titleNow: "Now",
+      name: "Name",
+      phoneNumber: "Phone Number",
+      phonePlaceholder: "Your number",
+      dateMeal: "Date and Meal",
+      selectTimeOrder: "Select time of order",
+      howManyPeople: "How Many People",
+      selectNumberPeople: "Select number of people",
+      selectMealFirst: "Select meal first",
+      orderNow: "Order Now",
+      fillAllFields: "Please fill in all fields.",
+      invalidPhone: "Please enter a valid phone number.",
+      checkingAvailability: "Checking availability...",
+      alreadyReserved: "You already have a reservation for this day.",
+      maxReservations: "You have reached the maximum of 4 reservations.",
+      noTables: "No tables available for this slot.",
+      reservedSuccess: (table) => `Reserved successfully at ${table}.`,
+      reservedFail: "Failed to reserve. Try again.",
+    },
+    ja: {
+      titleOrder: "予約",
+      titleNow: "する",
+      name: "名前",
+      phoneNumber: "電話番号",
+      phonePlaceholder: "電話番号を入力してください",
+      dateMeal: "日付と食事",
+      selectTimeOrder: "注文時間を選択してください",
+      howManyPeople: "人数",
+      selectNumberPeople: "人数を選択してください",
+      selectMealFirst: "まず食事を選択してください",
+      orderNow: "予約する",
+      fillAllFields: "すべての項目を入力してください。",
+      invalidPhone: "有効な電話番号を入力してください。",
+      checkingAvailability: "空席を確認しています...",
+      alreadyReserved: "この日にすでに予約があります。",
+      maxReservations: "予約は最大4件までです。",
+      noTables: "この時間帯の空きテーブルはありません。",
+      reservedSuccess: (table) => `${table}で予約が完了しました。`,
+      reservedFail: "予約に失敗しました。もう一度お試しください。",
+    },
+  };
+
+  const t = texts[language];
+
+  // The rest of your component logic remains unchanged,
+  // just replace static texts with t.[key].
+
   const [timeOptions, setTimeOptions] = useState([]);
   const initialized = useRef(false);
   const [selectedMeal, setSelectedMeal] = useState("");
@@ -24,8 +78,8 @@ function Order() {
   const handleMealChange = async (e) => {
     const meal = e.target.value;
     setSelectedMeal(meal);
-    setSelectedPeople(""); // Reset selected people
-    setPeopleOptions([]); // Reset people options temporarily
+    setSelectedPeople("");
+    setPeopleOptions([]);
 
     const [mealType, date] = meal.split(" ");
     const datetimeSlot = `${date}_${mealType.toLowerCase()}`;
@@ -50,20 +104,17 @@ function Order() {
 
     const options = new Set();
 
-    // Counter: max 5 seats
     const counterSeatsLeft = 5 - counterSeatsUsed;
     for (let i = 1; i <= Math.min(3, counterSeatsLeft); i++) {
       options.add(i);
     }
 
-    // Tables: if available, allow 2–6 people
     if (!table1Used || !table2Used) {
       for (let i = 2; i <= 6; i++) {
         options.add(i);
       }
     }
 
-    // Sort and set options
     const sortedOptions = Array.from(options).sort((a, b) => a - b);
     setPeopleOptions(sortedOptions);
   };
@@ -72,7 +123,6 @@ function Order() {
     const [mealType, date] = selectedMeal.split(" ");
     const datetimeSlot = `${date}_${mealType.toLowerCase()}`;
 
-    // Check for existing reservations by phone
     const phoneCheckQuery = query(
       collection(db, "reservations"),
       where("phone", "==", phone)
@@ -92,14 +142,13 @@ function Order() {
     });
 
     if (sameDayReservation) {
-      return setMessage("You already have a reservation for this day.");
+      return setMessage(t.alreadyReserved);
     }
 
     if (totalReservations >= 4) {
-      return setMessage("You have reached the maximum of 4 reservations.");
+      return setMessage(t.maxReservations);
     }
 
-    // Check availability for slot
     const reservationRef = collection(db, "reservations");
     const q = query(reservationRef, where("datetimeSlot", "==", datetimeSlot));
     const querySnapshot = await getDocs(q);
@@ -132,7 +181,7 @@ function Order() {
       return await saveReservation("table2");
     }
 
-    return setMessage("No tables available for this slot.");
+    return setMessage(t.noTables);
   };
 
   const saveReservation = async (tableName) => {
@@ -147,28 +196,27 @@ function Order() {
         datetimeSlot,
         createdAt: Timestamp.now(),
       });
-      setMessage(`Reserved successfully at ${tableName}.`);
+      setMessage(t.reservedSuccess(tableName));
       setTimeout(() => {
         window.location.reload();
-      }, 3000); // waits 3 seconds before refreshing
+      }, 3000);
     } catch (err) {
-      setMessage("Failed to reserve. Try again.");
+      setMessage(t.reservedFail);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !phone || !selectedMeal || !selectedPeople) {
-      return setMessage("Please fill in all fields.");
+      return setMessage(t.fillAllFields);
     }
 
-    // Assume Japan if no + is entered
     const phoneNumber = parsePhoneNumberFromString(phone, "JP");
     if (!phoneNumber || !phoneNumber.isValid()) {
-      return setMessage("Please enter a valid phone number.");
+      return setMessage(t.invalidPhone);
     }
 
-    setMessage("Checking availability...");
+    setMessage(t.checkingAvailability);
     await checkAvailabilityAndBook();
   };
 
@@ -219,7 +267,7 @@ function Order() {
   return (
     <div className="order" id="Order">
       <h1>
-        <span>Order</span>Now
+        <span>{t.titleOrder}</span> {t.titleNow}
       </h1>
 
       <div className="order_main">
@@ -229,36 +277,32 @@ function Order() {
 
         <form onSubmit={handleSubmit}>
           <div className="input">
-            <p>Name</p>
+            <p>{t.name}</p>
             <input
               type="text"
-              placeholder="Your name"
+              placeholder={language === "ja" ? "あなたの名前" : "Your name"}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="input">
-          <p>Phone Number</p>
-          <input
-            type="tel"
-            inputMode="tel"
-            pattern="[0-9+]{7,15}"
-            placeholder="Your number"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
+            <p>{t.phoneNumber}</p>
+            <input
+              type="tel"
+              inputMode="tel"
+              pattern="[0-9+]{7,15}"
+              placeholder={t.phonePlaceholder}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
           </div>
 
           <div className="input">
-            <p>Date and Meal</p>
-            <select
-              name="meal"
-              value={selectedMeal}
-              onChange={handleMealChange}
-            >
+            <p>{t.dateMeal}</p>
+            <select name="meal" value={selectedMeal} onChange={handleMealChange}>
               <option value="" disabled>
-                Select time of order
+                {t.selectTimeOrder}
               </option>
               {timeOptions.map((meal, index) => (
                 <option value={meal} key={index}>
@@ -269,7 +313,7 @@ function Order() {
           </div>
 
           <div className="input">
-            <p>How Many People</p>
+            <p>{t.howManyPeople}</p>
             <select
               name="people"
               value={selectedPeople}
@@ -277,7 +321,7 @@ function Order() {
               disabled={!selectedMeal}
             >
               <option value="" disabled>
-                {selectedMeal ? "Select number of people" : "Select meal first"}
+                {selectedMeal ? t.selectNumberPeople : t.selectMealFirst}
               </option>
               {peopleOptions.map((num) => (
                 <option key={num} value={num}>
@@ -288,7 +332,7 @@ function Order() {
           </div>
 
           <button type="submit" className="order_btn">
-            Order Now
+            {t.orderNow}
           </button>
           {message && <p style={{ marginTop: "10px" }}>{message}</p>}
         </form>

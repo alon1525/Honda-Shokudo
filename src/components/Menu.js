@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { LanguageContext } from "../context/LanguageContext";
+
 import image0 from "../image/desert.jpg";
 import image1 from "../image/soup.jpg";
 import image2 from "../image/Blue_Cheese_And_apple_risotto.jpg";
@@ -12,92 +14,138 @@ import image10 from "../image/Spanchi.jpg";
 import image11 from "../image/sandwich.jpg";
 
 function Menu() {
-  const [menuItems] = useState([
+  const { language } = useContext(LanguageContext);
+
+  const menuItems = [
     {
-      name: "Cake",
+      name: { en: "Cake", ja: "ケーキ" },
       image: image0,
       price: 18.99,
-      description: "Grilled to perfection with fresh ingredients.",
+      description: {
+        en: "Grilled to perfection with fresh ingredients.",
+        ja: "新鮮な材料で完璧に焼き上げました。",
+      },
     },
     {
-      name: "Soup",
+      name: { en: "Soup", ja: "スープ" },
       image: image1,
       price: 16.5,
-      description: "Classic Italian pasta with creamy sauce.",
+      description: {
+        en: "Classic Italian pasta with creamy sauce.",
+        ja: "クリーミーなソースのクラシックなイタリアンパスタ。",
+      },
     },
     {
-      name: "Risotto",
+      name: { en: "Risotto", ja: "リゾット" },
       image: image2,
       price: 19.25,
-      description: "Blue Cheese And Apple Risotto.",
+      description: {
+        en: "Blue Cheese And Apple Risotto.",
+        ja: "ブルーチーズとリンゴのリゾット。",
+      },
     },
     {
-      name: "Rissoto",
+      name: { en: "Rissoto", ja: "リゾット" },
       image: image4,
       price: 4.0,
-      description: "Bacon and Spinach Rissoto.",
+      description: {
+        en: "Bacon and Spinach Rissoto.",
+        ja: "ベーコンとほうれん草のリゾット。",
+      },
     },
     {
-      name: "Pizza",
+      name: { en: "Pizza", ja: "ピザ" },
       image: image4,
       price: 21.99,
-      description: "Wood-fired pizza with gooey cheese.",
+      description: {
+        en: "Wood-fired pizza with gooey cheese.",
+        ja: "薪窯で焼いたとろけるチーズのピザ。",
+      },
     },
     {
-      name: "Hot Dog",
+      name: { en: "Hot Dog", ja: "ホットドッグ" },
       image: image5,
       price: 12.0,
-      description: "Juicy sausage in a soft bun.",
+      description: {
+        en: "Juicy sausage in a soft bun.",
+        ja: "柔らかいパンにジューシーなソーセージ。",
+      },
     },
     {
-      name: "Juice",
+      name: { en: "Juice", ja: "ジュース" },
       image: image6,
       price: 3.5,
-      description: "Fresh-squeezed fruit juice.",
+      description: {
+        en: "Fresh-squeezed fruit juice.",
+        ja: "搾りたてのフルーツジュース。",
+      },
     },
     {
-      name: "Biryani",
+      name: { en: "Biryani", ja: "ビリヤニ" },
       image: image7,
       price: 17.75,
-      description: "Fragrant rice with spices and tender meat.",
+      description: {
+        en: "Fragrant rice with spices and tender meat.",
+        ja: "スパイスと柔らかい肉の香り高いご飯。",
+      },
     },
     {
-      name: "Chocolate",
+      name: { en: "Chocolate", ja: "チョコレート" },
       image: image8,
       price: 5.5,
-      description: "Rich and smooth chocolate bar.",
+      description: {
+        en: "Rich and smooth chocolate bar.",
+        ja: "濃厚で滑らかなチョコレートバー。",
+      },
     },
     {
-      name: "Ice Cream",
+      name: { en: "Ice Cream", ja: "アイスクリーム" },
       image: image9,
       price: 6.99,
-      description: "Cold and creamy dessert treat.",
+      description: {
+        en: "Cold and creamy dessert treat.",
+        ja: "冷たくクリーミーなデザート。",
+      },
     },
     {
-      name: "Spanchi",
+      name: { en: "Spanchi", ja: "スポンジケーキ" },
       image: image10,
       price: 7.25,
-      description: "Delicate sponge cake with flavor.",
+      description: {
+        en: "Delicate sponge cake with flavor.",
+        ja: "繊細な味わいのスポンジケーキ。",
+      },
     },
     {
-      name: "Sandwich",
+      name: { en: "Sandwich", ja: "サンドイッチ" },
       image: image11,
       price: 14.0,
-      description: "Loaded sandwich with fresh fillings.",
+      description: {
+        en: "Loaded sandwich with fresh fillings.",
+        ja: "新鮮な具材が詰まったサンドイッチ。",
+      },
     },
-  ]);
+  ];
 
   return (
     <div className="menu" id="Menu">
       <h1>
-        Our <span>Menu</span>
+        {language === "en" ? (
+          <>
+            Our <span>Menu</span>
+          </>
+        ) : (
+          <>
+            私たちの <span>メニュー</span>
+          </>
+        )}
       </h1>
 
       <div className="menu_box">
         {menuItems.map((item, index) => (
           <div className="menu_card" key={index}>
             <div className="menu_image">
-              <img src={item.image} alt={item.name} />
+              <img src={item.image} alt={item.name[language]} />
             </div>
 
             <div className="small_card">
@@ -105,8 +153,8 @@ function Menu() {
             </div>
 
             <div className="menu_info">
-              <h2>{item.name}</h2>
-              <p>{item.description}</p>
+              <h2>{item.name[language]}</h2>
+              <p>{item.description[language]}</p>
               <h3>${item.price.toFixed(2)}</h3>
 
               <div className="menu_icon">
