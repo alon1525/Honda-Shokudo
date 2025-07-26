@@ -38,7 +38,7 @@ function Order() {
       reservedSuccess: (table) => `Reserved successfully at ${table}.`,
       reservedFail: "Failed to reserve. Try again.",
     },
-    ja: {
+    jp: {
       titleOrder: "予約",
       titleNow: "する",
       name: "名前",
@@ -280,7 +280,7 @@ function Order() {
             <p>{t.name}</p>
             <input
               type="text"
-              placeholder={language === "ja" ? "あなたの名前" : "Your name"}
+              placeholder={language === "jp" ? "あなたの名前" : "Your name"}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />

@@ -12,7 +12,7 @@ function Home() {
       twist: "Twist",
       button: "Book A Table",
     },
-    ja: {
+    jp: {
       titleLine1: "洋食",
       titleLine2: "和風の",
       twist: "ひねり",

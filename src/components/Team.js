@@ -44,7 +44,7 @@ function Team() {
       </h1>
 
       <div className="team_box">
-        {teamMembers[language === "ja" ? "jp" : "en"].map((member) => (
+        {teamMembers[language === "jp" ? "jp" : "en"].map((member) => (
           <div className="profile" key={member.id}>
             <img src={member.image} alt={member.name} />
             <div className="info">

@@ -35,7 +35,7 @@ const reviews = {
       text: `Spectacularly good restaurant - possibly the best western food experience I’ve ever had at a restaurant anywhere in the world. Very relaxed and genuinely friendly service too.`,
     },
   ],
-  ja: [
+  jp: [
     {
       name: "Cecily Vix",
       image: review1,
@@ -63,7 +63,7 @@ function Review() {
   const { language } = useContext(LanguageContext);
   const reviewList = reviews[language] || reviews.en;
 
-  const title = language === "ja" ? "お客様のレビュー" : "Customer Review";
+  const title = language === "jp" ? "お客様のレビュー" : "Customer Review";
 
   return (
     <div className="review" id="Review">

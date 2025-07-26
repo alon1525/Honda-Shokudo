@@ -1,0 +1,55 @@
+.menu-section {
+  padding: 40px 20px;
+  background-color: #fff8f0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.menu-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+.menu-title span {
+  color: #c45c5c;
+}
+
+.menu-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.menu-group {
+  margin-bottom: 40px;
+}
+
+.menu-category {
+  font-size: 1.6rem;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  color: #444;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed #ddd;
+}
+
+.menu-item-name {
+  font-size: 1rem;
+}
+
+.menu-item-price {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #444;
+}
