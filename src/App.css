@@ -99,6 +99,7 @@ section .main{
   justify-content: space-around;
   position: relative;
   top: 130px;
+  margin-bottom: 150px;
 }
 
 section .main .men_text h1{
@@ -188,14 +189,14 @@ section .main_btn:hover i {
 
 
   section .main .men_text h1 {
-    font-size: 20px;
+    font-size: 26px;
     line-height: 38px;
     top: 0;
     left: 0;
   }
 
   section .main .men_text .highlighted {
-    font-size: 28px;
+    font-size: 36px;
     line-height: 38px;
   }
 
@@ -231,13 +232,13 @@ section .main_btn:hover i {
 
 @media screen and (max-width: 768px){
     section .main .men_text h1 {
-    font-size: 14px;
+    font-size: 20px;
     line-height: 38px;
     top: 0;
     left: 0;
   }
     section .main .men_text .highlighted {
-    font-size: 20px;
+    font-size: 28px;
     line-height: 38px;
   }
     section .main_btn {
@@ -257,7 +258,6 @@ section .main_btn:hover i {
 
 
 /*About*/
-/* About */
 
 .about {
   padding: 70px 0;
@@ -265,16 +265,19 @@ section .main_btn:hover i {
 
 .about .about_main {
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  justify-content: space-around; /* or space-between */
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 10px; /* optional: space from screen edges */
 }
 
 .about .about_main .image img {
-  max-width: 800px;
-  width: 100%;
   height: auto;
   position: relative;
   top: 60px;
+  width: 50vh; /* use width to maintain 50% of horizontal space */
+  max-width: 10000px; /* optional: prevent it from being too large on big screens */
+  box-sizing: border-box;
 }
 
 .about .about_main .about_text h1 span {
@@ -295,24 +298,49 @@ section .main_btn:hover i {
 }
 
 .about .about_main .about_text p {
-  width: 650px;
   text-align: justify;
   margin-right: 30px;
   line-height: 22px;
 }
-
-.about .about_btn {
-  background: #fac031;
-  padding: 12px 25px;
-  text-decoration: none;
-  color: #fff;
-  position: relative;
-  left: 55%;
-  bottom: 30px;
+.about .about_main .about_text{
+  text-align: justify;
+  width: 50vh;
+  box-sizing: border-box;
 }
 
+@media screen and (max-width: 1024px) {
+  .about .about_main .about_text h1 {
+    font-size: 42px; /* 55px → 42px (approx. 76%) */
+  }
 
+  .about .about_main .about_text h3 {
+    font-size: 24px; /* 30px → 24px (80%) */
+  }
 
+  .about .about_main .about_text p {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 870px) {
+
+  .about .about_main .about_text h1 {
+    font-size: 32px; /* 55px → 32px (58%) */
+  }
+
+  .about .about_main .about_text h3 {
+    font-size: 20px; /* 30px → 20px (66%) */
+  }
+
+  .about .about_main .about_text p {
+    font-size: 14px;
+  }
+
+  .about .about_main .image img {
+    width: 80%;
+    top: 30px;
+  }
+}
 
 
 
