@@ -37,7 +37,6 @@ section nav{
   right: 0;
   left: 0;
   background: white;
-  flex-wrap: nowrap;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   z-index: 1000;
 }
@@ -95,6 +94,7 @@ section nav .icon i:hover{
   color: #fac031;
 }
 
+
 section .main{
   display: flex;
   align-items: center;
@@ -108,17 +108,9 @@ section .main .men_text h1{
   position: relative;
   top: -80px;
   left: 20px;
-}
-
-section .main .men_text h1 {
   text-align: center;
   font-size: 50px;
   line-height: 60px;
-}
-
-section .main .men_text h1 span
-{
-  margin-top: 30px;
 }
 
 section .main .men_text .highlighted {
@@ -132,16 +124,6 @@ section .main .men_text .highlighted {
 section .main .main_image img{
   width: 700px;
   position: relative;
-  left: 70px;
-}
-
-section p{
-  width: 650px;
-  text-align: justify;
-  position: relative;
-  left: 123px;
-  bottom: 120px;
-  line-height: 22px;
 }
 
 /* Reset position so it's controlled by flexbox */
@@ -198,14 +180,87 @@ section .main_btn:hover i {
   }
 }
 
+@media screen and (max-width: 1000px) {
+  section .main {
+    flex-direction: row; /* keep horizontal */
+    justify-content: space-around;
+    top: 80px;
+  }
 
+
+
+  section .main .men_text h1 {
+    font-size: 20px;
+    line-height: 38px;
+    top: 0;
+    left: 0;
+  }
+
+  section .main .men_text .highlighted {
+    font-size: 28px;
+    line-height: 38px;
+  }
+
+  section .main .main_btn {
+    margin-top: 20px;
+  }
+
+  section .main .main_image {
+    width: 48%;
+  }
+
+  section .main .main_image img {
+    width: 100%;
+    max-width: none;
+    position: static;
+    left: 0;
+  }
+
+    section .main_btn {
+    padding: 10px 20px;
+    gap: 4px;
+  }
+
+  section .main_btn a {
+    font-size: 14px;
+  }
+
+  section .main_btn i {
+    font-size: 14px;
+  }
+}
+
+
+@media screen and (max-width: 720px){
+    section .main .men_text h1 {
+    font-size: 14px;
+    line-height: 38px;
+    top: 0;
+    left: 0;
+  }
+    section .main .men_text .highlighted {
+    font-size: 20px;
+    line-height: 38px;
+  }
+    section .main_btn {
+    padding: 8px 16px;
+    gap: 3px;
+  }
+
+  section .main_btn a {
+    font-size: 12px;
+  }
+
+  section .main_btn i {
+    font-size: 12px;
+  }
+}
 
 
 
 /*About*/
 
 .about{
-  width: 100%;
   padding: 70px 0;
 }
 
@@ -254,6 +309,7 @@ section .main_btn:hover i {
   left: 55%;
   bottom: 30px;
 }
+
 
 
 
