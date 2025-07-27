@@ -37,6 +37,7 @@ section nav{
   right: 0;
   left: 0;
   background: white;
+  flex-wrap: nowrap;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   z-index: 1000;
 }
@@ -172,6 +173,31 @@ section .main_btn:hover i {
 .main_content {
   text-align: center;
 }
+
+@media screen and (max-width: 768px) {
+  section nav {
+    height: 80px; /* keep it fixed */
+    padding: 0 15px;
+  }
+
+  section nav .logo img {
+    width: 90px;
+  }
+
+  section nav ul li {
+    margin: 0 8px;
+  }
+
+  section nav ul li a {
+    font-size: 13px;
+  }
+
+  section nav .icon button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
+
 
 
 
