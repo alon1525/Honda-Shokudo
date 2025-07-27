@@ -24,9 +24,7 @@ html{
   scroll-behavior: smooth;
 }
 
-section{
-  width: 100%;
-}
+
 
 section nav{
   display: flex;
@@ -180,7 +178,7 @@ section .main_btn:hover i {
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1024px) {
   section .main {
     flex-direction: row; /* keep horizontal */
     justify-content: space-around;
@@ -231,7 +229,7 @@ section .main_btn:hover i {
 }
 
 
-@media screen and (max-width: 720px){
+@media screen and (max-width: 768px){
     section .main .men_text h1 {
     font-size: 14px;
     line-height: 38px;
@@ -259,48 +257,51 @@ section .main_btn:hover i {
 
 
 /*About*/
+/* About */
 
-.about{
+.about {
   padding: 70px 0;
 }
 
-.about .about_main{
+.about .about_main {
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
 
-.about .about_main .image img{
-  width: 800px;
+.about .about_main .image img {
+  max-width: 800px;
+  width: 100%;
+  height: auto;
   position: relative;
   top: 60px;
 }
 
-.about .about_main .about_text h1 span{
+.about .about_main .about_text h1 span {
   color: #fac031;
   margin-right: 15px;
   font-family: mv boli;
 }
 
-.about .about_main .about_text h1{
+.about .about_main .about_text h1 {
   font-size: 55px;
   position: relative;
   bottom: 50px;
 }
 
-.about .about_main .about_text h3{
+.about .about_main .about_text h3 {
   font-size: 30px;
   margin: 0 0 50px 0;
 }
 
-.about .about_main .about_text p{
+.about .about_main .about_text p {
   width: 650px;
   text-align: justify;
   margin-right: 30px;
   line-height: 22px;
 }
 
-.about .about_btn{
+.about .about_btn {
   background: #fac031;
   padding: 12px 25px;
   text-decoration: none;
@@ -309,6 +310,8 @@ section .main_btn:hover i {
   left: 55%;
   bottom: 30px;
 }
+
+
 
 
 
