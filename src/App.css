@@ -704,6 +704,20 @@ section .main_btn:hover i {
   margin-top: 5px;
 }
 
+@media screen and (max-width: 768px) {
+.review {
+  padding-top: 400px ;
+}}
+
+
+@media screen and (max-width: 480px) {
+  .review {
+  padding-top: 400px ;
+  }
+
+  
+}
+
 
 
 /*Order*/
@@ -828,7 +842,7 @@ section .main_btn:hover i {
   font-family: mv boli;
 }
 
-.team h1 span::after{
+.team h1 span::after {
   content: '';
   width: 100%;
   height: 2px;
@@ -837,6 +851,7 @@ section .main_btn:hover i {
   position: relative;
   bottom: 15px;
 }
+
 
 .team .team_box{
   width: 95%;
@@ -932,7 +947,7 @@ section .main_btn:hover i {
   }
 
   .team .team_box .profile {
-    margin: 20px 0;
+    margin: 40px 0;
   }
 }
 
@@ -946,10 +961,6 @@ section .main_btn:hover i {
   .team .team_box .profile img {
     max-width: 200px;
     max-height: 200px;
-  }
-
-  .team .team_box .profile:hover img {
-    margin-top: -180px;
   }
 
   .team .team_box .profile .info {
