@@ -606,11 +606,11 @@ section .main_btn:hover i {
     font-size: 26px;
   }
   .gallary .gallary_image_box .gallary_image h3 {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .gallary .gallary_image_box .gallary_image p {
-    font-size: 13px;
+    font-size: 10px;
   }
 
   .gallary .gallary_image_box .gallary_image .gallary_btn {
