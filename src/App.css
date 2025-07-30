@@ -529,6 +529,7 @@ section .main_btn:hover i {
 .gallary .gallary_image_box .gallary_image{
   display: flex;
   align-items: center;
+  position: relative;
   justify-content: center;
   background: black;
 }
@@ -559,7 +560,10 @@ section .main_btn:hover i {
 
 .gallary .gallary_image_box .gallary_image p{
   position: absolute;
-  width: 400px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+  word-wrap: break-word;
   margin-top: 30px;
   text-align: center;
   color: white;
@@ -573,23 +577,47 @@ section .main_btn:hover i {
   opacity: 1;
 }
 
-.gallary .gallary_image_box .gallary_image .gallary_btn{
-  position: absolute;
-  margin-top: 180px;
-  color: #000;
-  background: #fac031;
-  padding: 7px 25px;
-  text-decoration: none;
-  opacity: 0;
-  transform: translateY(45px);
-  z-index: 5;
-  transition: 0.3s;
-}
-
 .gallary .gallary_image_box .gallary_image:hover .gallary_btn{
   opacity: 1;
   transform: translateY(0);
 }
+
+
+@media screen and (max-width: 768px) {
+  .gallary h1 {
+    font-size: 32px;
+  }
+
+  .gallary .gallary_image_box .gallary_image h3 {
+    font-size: 22px;
+  }
+
+  .gallary .gallary_image_box .gallary_image p {
+    font-size: 14px;
+  }
+
+  .gallary .gallary_image_box .gallary_image .gallary_btn {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .gallary h1 {
+    font-size: 26px;
+  }
+  .gallary .gallary_image_box .gallary_image h3 {
+    font-size: 20px;
+  }
+
+  .gallary .gallary_image_box .gallary_image p {
+    font-size: 13px;
+  }
+
+  .gallary .gallary_image_box .gallary_image .gallary_btn {
+    font-size: 12px;
+  }
+}
+
 
 
 
