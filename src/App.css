@@ -606,11 +606,11 @@ section .main_btn:hover i {
     font-size: 26px;
   }
   .gallary .gallary_image_box .gallary_image h3 {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   .gallary .gallary_image_box .gallary_image p {
-    font-size: 10px;
+    font-size: 13px;
   }
 
   .gallary .gallary_image_box .gallary_image .gallary_btn {
@@ -665,6 +665,15 @@ section .main_btn:hover i {
   padding: 8px 20px;
   margin: 0 8px;
 }
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 55px 0; /* top & bottom space */
+  box-sizing: border-box;
+}
+
 
 .review .review_box .review_card .review_profile{
   display: flex;

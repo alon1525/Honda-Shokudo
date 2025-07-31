@@ -11,6 +11,8 @@ import review2 from "../image/unnamed (1).png";
 import review3 from "../image/unnamed (2).png";
 import review4 from "../image/unnamed (3).png";
 import { LanguageContext } from "../context/LanguageContext";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const reviews = {
   en: [
@@ -78,36 +80,43 @@ function Review() {
           </>
         )}
       </h1>
-
-      <div className="review_box">
+      <div className= "review_box">
+      <Swiper
+        spaceBetween={20}
+        slidesPerView={1}
+        breakpoints={{
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
+      >
         {reviewList.map((review, index) => (
-          <div className="review_card" key={index}>
-            <div className="review_profile">
-              <img src={review.image} alt={`review ${index + 1}`} />
-            </div>
-
-            <div className="review_text">
-              <h2 className="name">{review.name}</h2>
-
-              <div className="review_icon">
-                <FaStar />
-                <FaStar />
-                <FaStar />
-                <FaStar />
-                <FaStar />
+          <SwiperSlide key={index}>
+            <div className="review_card">
+              <div className="review_profile">
+                <img src={review.image} alt={`review ${index + 1}`} />
               </div>
 
-              <div className="review_social">
-                <FaFacebookF />
-                <FaInstagram />
-                <FaTwitter />
-                <FaLinkedinIn />
+              <div className="review_text">
+                <h2 className="name">{review.name}</h2>
+                <div className="review_icon">
+                  <FaStar />
+                  <FaStar />
+                  <FaStar />
+                  <FaStar />
+                  <FaStar />
+                </div>
+                <div className="review_social">
+                  <FaFacebookF />
+                  <FaInstagram />
+                  <FaTwitter />
+                  <FaLinkedinIn />
+                </div>
+                <p>{review.text}</p>
               </div>
-
-              <p>{review.text}</p>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
+      </Swiper>
       </div>
     </div>
   );
