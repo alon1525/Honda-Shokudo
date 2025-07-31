@@ -584,7 +584,8 @@ section .main_btn:hover i {
 
 
 @media screen and (max-width: 768px) {
-  .gallary h1 {
+  .gallary h1,
+  .review h1 {
     font-size: 32px;
   }
 
@@ -602,9 +603,11 @@ section .main_btn:hover i {
 }
 
 @media screen and (max-width: 480px) {
-  .gallary h1 {
+  .gallary h1,
+  .review h1 {
     font-size: 26px;
   }
+
   .gallary .gallary_image_box .gallary_image h3 {
     font-size: 20px;
   }
