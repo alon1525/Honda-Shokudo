@@ -515,7 +515,7 @@ section .main_btn:hover i {
   background: #fac031;
   display: block;
   position: relative;
-  bottom: 2vh;
+  bottom: 15px;
 }
 
 .gallary .gallary_image_box{
@@ -647,7 +647,7 @@ section .main_btn:hover i {
   height: 2px;
   background: #fac031;
   position: relative;
-  bottom: 2vh;
+  bottom: 15px;
   display: block;
 }
 
@@ -749,6 +749,9 @@ section .main_btn:hover i {
 .review h1 {
     font-size: 32px;
 }
+.review h1 span::after {
+    bottom: 10px;
+  }
 }
 
 
@@ -759,7 +762,9 @@ section .main_btn:hover i {
   .review h1 {
     font-size: 26px;
   }
-  
+  .review h1 span::after {
+    bottom: 6px;
+  }
 }
 
 
