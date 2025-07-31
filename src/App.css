@@ -584,8 +584,7 @@ section .main_btn:hover i {
 
 
 @media screen and (max-width: 768px) {
-  .gallary h1,
-  .review h1 {
+  .gallary h1{
     font-size: 32px;
   }
 
@@ -603,8 +602,7 @@ section .main_btn:hover i {
 }
 
 @media screen and (max-width: 480px) {
-  .gallary h1,
-  .review h1 {
+  .gallary h1{
     font-size: 26px;
   }
 
@@ -747,14 +745,20 @@ section .main_btn:hover i {
 @media screen and (max-width: 768px) {
 .review {
   padding-top: 400px ;
-}}
+}
+.review h1 {
+    font-size: 32px;
+}
+}
 
 
 @media screen and (max-width: 480px) {
   .review {
   padding-top: 400px ;
   }
-
+  .review h1 {
+    font-size: 26px;
+  }
   
 }
 
