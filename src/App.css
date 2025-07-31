@@ -749,8 +749,8 @@ section .main_btn:hover i {
 .review h1 {
     font-size: 32px;
 }
-.review h1 span::after {
-    bottom: 10px;
+.review h1 span::after,.gallary h1 span::after,.team h1 span::after,.order h1 span::after {
+    bottom: 9px;
   }
 }
 
@@ -762,7 +762,7 @@ section .main_btn:hover i {
   .review h1 {
     font-size: 26px;
   }
-  .review h1 span::after {
+  .review h1 span::after,.gallary h1 span::after,.team h1 span::after,.order h1 span::after{
     bottom: 6px;
   }
 }
