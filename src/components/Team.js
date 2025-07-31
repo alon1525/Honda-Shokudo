@@ -40,9 +40,8 @@ function Team() {
   return (
     <div className="team" id="Team">
       <h1>
-        {language === "ja" ? <>私たちの<span>チーム</span></> : <>Our<span>Team</span></>}
+        {language === "jp" ? <>私たちの<span>チーム</span></> : <>Our<span>Team</span></>}
       </h1>
-
       <div className="team_box">
         {teamMembers[language === "jp" ? "jp" : "en"].map((member) => (
           <div className="profile" key={member.id}>
