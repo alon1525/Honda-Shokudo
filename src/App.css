@@ -751,7 +751,6 @@ section .main_btn:hover i {
 .order{
   width: 100%;
   padding: 70px 0;
-  background-image: url(image/bg2.jpg);
   background-size: cover;
   background-position: center;
 }
@@ -780,29 +779,49 @@ section .main_btn:hover i {
   bottom: 15px;
 }
 
-.order .order_main{
+.order .order_main {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-wrap: wrap; /* ✅ enable wrapping */
+  gap: 30px;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
-.order .order_main .order_image img{
-  width: 600px;
+
+.order .order_main .order_image img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
 }
 
-.order .order_main form{
+.order .order_main form .input input,
+.order .order_main form .input select {
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+
+.order .order_main form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   grid-gap: 0 10px;
 }
+
 
 .order .order_main form .input p{
   line-height: 25px;
 }
 
-.order .order_main form .input{
+.order .order_main form .input {
+  width: 100%;
+  max-width: 100%;
   margin: 5px;
 }
+
+
 
 .order .order_main form .input input{
   width: 300px;
@@ -843,6 +862,44 @@ section .main_btn:hover i {
   border: 2px solid #fac031;
 }
 
+@media screen and (max-width: 894px){
+    .order .order_main form .order_btn {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .order h1 {
+    font-size: 32px;
+  }
+
+  .order h1 span::after {
+    bottom: 10px;
+  }
+
+  .order .order_main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .order .order_main form {
+    grid-template-columns: 1fr; /* 1 column instead of 2 */
+  }
+
+  .order .order_main form .order_btn {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .order h1 {
+    font-size: 26px;
+  }
+
+  .order h1 span::after {
+    bottom: 6px;
+  }
+}
 
 
 /*Team*/
@@ -1038,21 +1095,35 @@ footer .footer_main {
 footer .footer_main .footer_tag {
   display: flex;
   align-items: center;
-  gap: 40px;  /* spacing between items */
-  font-size: 18px;
+  flex-wrap: wrap;  /* ✅ allow wrapping */
+  gap: 20px;
+  justify-content: center;
+  text-align: center;
 }
+
+
 
 footer .footer_main .footer_tag h2 {
   margin: 0;
   font-size: 30px;
-  white-space: nowrap;
+  white-space: normal;
   font-weight: bold;
   color: #000;
 }
 
 footer .footer_main .footer_tag p {
   margin: 0;
-  white-space: nowrap;
+  white-space: normal;
   cursor: default;
 }
 
+@media screen and (max-width: 480px) {
+  footer .footer_main .footer_tag {
+    font-size: 14px;
+    gap: 10px;
+  }
+
+  footer .footer_main .footer_tag h2 {
+    font-size: 22px;
+  }
+}
