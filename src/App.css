@@ -515,7 +515,7 @@ section .main_btn:hover i {
   background: #fac031;
   display: block;
   position: relative;
-  bottom: 15px;
+  bottom: 2vh;
 }
 
 .gallary .gallary_image_box{
@@ -647,7 +647,7 @@ section .main_btn:hover i {
   height: 2px;
   background: #fac031;
   position: relative;
-  bottom: 15px;
+  bottom: 2vh;
   display: block;
 }
 
