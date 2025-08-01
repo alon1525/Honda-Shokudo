@@ -15,6 +15,7 @@ html, body, #root {
   flex-direction: column;
   max-width: 100%;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 /* Content area grows to fill available space */
@@ -293,7 +294,7 @@ section .main_btn:hover i {
 .about .about_main .about_text h1 {
   font-size: 55px;
   position: relative;
-  bottom: 50px;
+  bottom: 45px;
 }
 
 .about .about_main .about_text h3 {
@@ -315,6 +316,7 @@ section .main_btn:hover i {
 @media screen and (max-width: 1024px) {
   .about .about_main .about_text h1 {
     font-size: 42px; /* 55px → 42px (approx. 76%) */
+    bottom: 40px;
   }
 
   .about .about_main .about_text h3 {
@@ -330,10 +332,14 @@ section .main_btn:hover i {
 
   .about .about_main .about_text h1 {
     font-size: 32px; /* 55px → 32px (58%) */
+    bottom: 15px;
+    
   }
 
   .about .about_main .about_text h3 {
     font-size: 20px; /* 30px → 20px (66%) */
+    margin: 0 0 30px 0;
+
   }
 
   .about .about_main .about_text p {
@@ -348,10 +354,13 @@ section .main_btn:hover i {
 @media screen and (max-width: 650px) {
   .about .about_main .about_text h1 {
     font-size: 26px; /* smaller heading */
+    bottom: 15px;
+
   }
 
   .about .about_main .about_text h3 {
     font-size: 16px;
+    margin: 0 0 20px 0;
   }
 
   .about .about_main .about_text p {
@@ -366,9 +375,11 @@ section .main_btn:hover i {
 @media screen and (max-width: 560px) {
   .about .about_main .about_text h1 {
     font-size: 22px; /* smaller heading */
+    bottom: 10px;
   }
   .about .about_main .about_text h3 {
     font-size: 14px;
+    margin: 0 0 15px 0;
   }
 
   .about .about_main .about_text p {
@@ -377,10 +388,26 @@ section .main_btn:hover i {
     .about .about_main .image img {
     width: 35vh;
 }
-
 }
 
+@media screen and (max-width: 400px) {
+  .about .about_main .about_text h1 {
+    font-size: 20px; /* smaller heading */
+    bottom: 8px;
+  }
+  .about .about_main .about_text h3 {
+    font-size: 12px;
+    margin: 0 0 12px 0;
 
+  }
+
+  .about .about_main .about_text p {
+    font-size: 8px;
+  }
+    .about .about_main .image img {
+    width: 20vh;
+}
+}
 
 /*Menu*/
 
@@ -635,13 +662,15 @@ section .main_btn:hover i {
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 510px) {
   .gallary h1{
     font-size: 26px;
   }
 
   .gallary .gallary_image_box .gallary_image h3 {
     font-size: 20px;
+    margin-bottom: 90px;
+
   }
 
   .gallary .gallary_image_box .gallary_image p {
@@ -651,6 +680,24 @@ section .main_btn:hover i {
   .gallary .gallary_image_box .gallary_image .gallary_btn {
     font-size: 12px;
   }
+
+}
+@media screen and (max-width: 400px) {
+
+  .gallary .gallary_image_box .gallary_image h3 {
+    font-size: 16px;
+    margin-bottom: 80px;
+
+  }
+
+  .gallary .gallary_image_box .gallary_image p {
+    font-size: 10px;
+  }
+
+  .gallary .gallary_image_box .gallary_image .gallary_btn {
+    font-size: 12px;
+  }
+
 }
 
 
