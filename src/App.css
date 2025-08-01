@@ -279,7 +279,7 @@ section .main_btn:hover i {
   height: auto;
   position: relative;
   top: 60px;
-  width: 50vh; /* use width to maintain 50% of horizontal space */
+  width: 60vh; /* use width to maintain 50% of horizontal space */
   max-width: 10000px; /* optional: prevent it from being too large on big screens */
   box-sizing: border-box;
 }
@@ -341,9 +341,43 @@ section .main_btn:hover i {
   }
 
   .about .about_main .image img {
-    width: 80%;
-    top: 30px;
+    width: 50vh;
+}
+}
+
+@media screen and (max-width: 650px) {
+  .about .about_main .about_text h1 {
+    font-size: 26px; /* smaller heading */
   }
+
+  .about .about_main .about_text h3 {
+    font-size: 16px;
+  }
+
+  .about .about_main .about_text p {
+    font-size: 11px;
+  }
+
+  .about .about_main .image img {
+    width: 45vh;
+}
+}
+
+@media screen and (max-width: 560px) {
+  .about .about_main .about_text h1 {
+    font-size: 22px; /* smaller heading */
+  }
+  .about .about_main .about_text h3 {
+    font-size: 14px;
+  }
+
+  .about .about_main .about_text p {
+    font-size: 9px;
+  }
+    .about .about_main .image img {
+    width: 35vh;
+}
+
 }
 
 
